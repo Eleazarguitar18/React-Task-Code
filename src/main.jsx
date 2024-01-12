@@ -6,8 +6,7 @@ import { TaskContextProvider } from "./context/TaskContext";
 // ? npm create vite {'para crear proyectos'}
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <TaskContextProvider>
-      <App />
-    </TaskContextProvider>
+    <App />
+    {/* <TaskContextProvider></TaskContextProvider> */}
   </React.StrictMode>
 );
