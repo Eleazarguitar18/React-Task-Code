@@ -84,7 +84,7 @@ export function TaskContextProvider(props) {
       .then((response) => {
         if (response.status === 204) {
           // Si la eliminación fue exitosa, actualizar el estado
-          setTasks(tasks.filter((task) => task.id !== TaskId));
+          setTasks(tasks.filter((task) => task.idTask !== TaskId));
         } else {
           console.error(`Error deleting task. Status: ${response.status}`);
         }
@@ -94,9 +94,70 @@ export function TaskContextProvider(props) {
       });
     // setTasks(tasks.filter((task) => task.id !== TaskId));
   }
+  async function onSubmit(values) {
+    // Realiza alguna lógica con los valores del formulario
+    console.log("Valores del formulario:", values);
+    // Resetea el formulario después de enviarlo
+    // TODO: verificar el envio de datos al backend
+    try {
+      // Realiza la solicitud POST al backend con Axios
+      const response = await axios.post(`${urlbase}/api/auth/registro`, values);
 
+      // Verifica si la solicitud fue exitosa
+      if (response.status === 201 || response.status === 200) {
+        console.log("Datos enviados exitosamente al backend");
+      } else {
+        console.error("Error al enviar datos al backend");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
+  }
+  async function registro(values) {
+    // Realiza alguna lógica con los valores del formulario
+    console.log("Valores del formulario:", values);
+    // Resetea el formulario después de enviarlo
+    // TODO: verificar el envio de datos al backend
+    try {
+      // Realiza la solicitud POST al backend con Axios
+      const response = await axios.get(
+        `${urlbase}/api/auth/registro/${values.codigo}`,
+        values
+      );
+
+      // Verifica si la solicitud fue exitosa
+      if (response.status === 201 || response.status === 201) {
+        console.log("Datos enviados exitosamente al backend");
+      } else {
+        console.error("Error al enviar datos al backend");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
+  }
+  async function auth(values) {
+    // Realiza alguna lógica con los valores del formulario
+    console.log("Valores del formulario:", values.codigo);
+    // Resetea el formulario después de enviarlo
+    // TODO: verificar el envio de datos al backend
+    try {
+      // Realiza la solicitud POST al backend con Axios
+      const response = await axios.post(`${urlbase}/api/auth/login`, values);
+
+      // Verifica si la solicitud fue exitosa
+      if (response.status === 201 || response.status === 200) {
+        console.log("Datos enviados exitosamente al backend");
+      } else {
+        console.error("Error al enviar datos al backend");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
+  }
   return (
-    <TaskContext.Provider value={{ tasks, createTask, deleteTask }}>
+    <TaskContext.Provider
+      value={{ tasks, createTask, deleteTask, onSubmit, auth, registro }}
+    >
       {props.children}
     </TaskContext.Provider>
   );

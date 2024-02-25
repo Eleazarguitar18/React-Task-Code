@@ -1,10 +1,22 @@
-import React from "react";
+import { useState, useContext } from "react";
 import { useFormik } from "formik";
+import { TaskContext } from "../context/TaskContext";
 import * as Yup from "yup";
-
+import { useNavigate } from "react-router-dom";
 // import { useState, useContext, useEffect } from "react";
 
 function Registrar() {
+  const navigate = useNavigate();
+  const inicioSecion = () => {
+    navigate("/EleazarReact/InicioSesion");
+  };
+  const HomePage = () => {
+    navigate("/EleazarReact");
+  };
+  const CodigoVerificacion = () => {
+    navigate("/EleazarReact/registroCodigo");
+  };
+  const { onSubmit } = useContext(TaskContext);
   const validationSchema = Yup.object({
     // Define las reglas de validación para tus campos
     nombres: Yup.string().required("El nombre es obligatorio"),
@@ -16,7 +28,7 @@ function Registrar() {
     fecha_nacimiento: Yup.date()
       .nullable()
       .required("La fecha de nacimiento es obligatoria"),
-    contrasenia: Yup.string()
+    password: Yup.string()
       .min(6, "La contraseña debe tener al menos 6 caracteres")
       .required("El campo de contraseña es obligatorio"),
     nombre_usuario: Yup.string().required(
@@ -30,15 +42,17 @@ function Registrar() {
       email: "",
       genero: "",
       fecha_nacimiento: "",
-      contrasenia: "",
+      password: "",
       nombre_usuario: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      onSubmit(values);
       // Realiza alguna lógica con los valores del formulario
-      console.log("Valores del formulario:", values);
+      // console.log("Valores del formulario:", values);
       // Resetea el formulario después de enviarlo
       formik.resetForm();
+      CodigoVerificacion();
     },
   });
   return (
@@ -48,6 +62,22 @@ function Registrar() {
           Crear cuenta
         </h1>
         {/* <h2>Nombres</h2> */}
+        <div className="text-center ">
+          <button
+            onClick={HomePage}
+            className="bg-slate-700 px-3 py-1 text-white rounded-md mt-4 hover:bg-slate-600 mx-auto"
+          >
+            Volver
+          </button>
+
+          <button
+            onClick={inicioSecion}
+            className="bg-slate-700 px-3 py-1 text-white rounded-md mt-4 hover:bg-slate-600 mx-auto"
+          >
+            Iniciar Sesion
+          </button>
+        </div>
+
         <input
           name="nombres"
           type="text"
@@ -127,17 +157,17 @@ function Registrar() {
 
         {/* <h2>Contraseña</h2> */}
         <input
-          name="contrasenia"
+          name="password"
           type="password"
           placeholder="Contraseña"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.contrasenia}
+          value={formik.values.password}
           className="bg-slate-300 p-3 w-full mb-3"
         />
-        {formik.touched.contrasenia && formik.errors.contrasenia && (
+        {formik.touched.password && formik.errors.password && (
           <div className="text-red-500 text-sm mt-1">
-            {formik.errors.contrasenia}
+            {formik.errors.password}
           </div>
         )}
 

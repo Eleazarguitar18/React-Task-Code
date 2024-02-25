@@ -13,7 +13,7 @@ function TaskList() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
       {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} />
+        <TaskCard key={task.idTask} task={task} />
       ))}
     </div>
   );

@@ -18,8 +18,8 @@ import axios from "axios";
 // ]
 
 
-export let urlbase = 'https://taskbackend-5jt6.onrender.com'
-// export const urlbase = 'http://localhost:3000';
+// export let urlbase = 'https://taskbackend-5jt6.onrender.com'
+export const urlbase = 'http://localhost:3000';
 
 const getTaskData = async () => {
     try {
